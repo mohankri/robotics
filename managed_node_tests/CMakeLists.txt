@@ -27,8 +27,13 @@ endif()
 add_executable(managed_node_example src/managed_node_example.cpp)
 ament_target_dependencies(managed_node_example rclcpp geometry_msgs lifecycle_msgs rclcpp_lifecycle)
 
+add_executable(lifecycle_manager src/lifecycle_manager.cpp)
+ament_target_dependencies(lifecycle_manager rclcpp geometry_msgs lifecycle_msgs rclcpp_lifecycle)
+
+
 install(TARGETS
    managed_node_example
+   lifecycle_manager
    DESTINATION lib/${PROJECT_NAME}
  )
 
