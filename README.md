@@ -1,6 +1,6 @@
 ## ROS-2
 
-# Managed Nodes
+# Managed Nodes (Only Supported in C++)
 ```
 Possible states of a managed node are:
 
