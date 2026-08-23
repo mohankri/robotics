@@ -1,5 +1,10 @@
 ## ROS-2
 
+# Create Package
+```
+ros2 pkg create <package_name> --build-type ament_cmake --dependencies rclcpp std_msgs
+```
+
 # Managed Nodes (Only Supported in C++)
 ```
 Possible states of a managed node are:
