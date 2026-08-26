@@ -24,3 +24,22 @@ To move from one point to another, a robot must:
 -    Customization – Extend functionality with plugins for custom algorithms and behaviors (Nav2 BT Server).
 
   <img width="3976" height="2453" alt="image" src="https://github.com/user-attachments/assets/03cd4375-f4ee-4c9a-a518-a353eb082f49" />
+
+
+# Map
+```
+A map is a representation of the environment in which the robot operates. The robot relies on a map to:
+
+Localize itself within the environment.
+Plan trajectories to navigate safely from one point to another.
+
+In ROS, a map is typically an occupancy grid map, where each cell contains values that indicate whether an area is free, occupied by an obstacle, or unknown.
+
+To create a map, you need:
+
+-  A robot equipped with:
+    -    LIDAR for detecting obstacles and measuring distances.
+    -    Odometry to track the robot's movement.
+-  An environment for the robot to explore and map.
+
+```
