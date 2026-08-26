@@ -27,19 +27,36 @@ To move from one point to another, a robot must:
 
 
 # Map
-```
-A map is a representation of the environment in which the robot operates. The robot relies on a map to:
 
-Localize itself within the environment.
-Plan trajectories to navigate safely from one point to another.
+A **map** is a representation of the environment in which the robot operates.
+The robot relies on a map to:
 
-In ROS, a map is typically an occupancy grid map, where each cell contains values that indicate whether an area is free, occupied by an obstacle, or unknown.
+- **Localize** itself within the environment.
+- **Plan trajectories** to navigate safely from one point to another.
+
+In ROS, a map is typically an **occupancy grid map**, where each cell contains
+a value indicating whether an area is *free*, *occupied* by an obstacle, or
+*unknown*.
+
+## Requirements
 
 To create a map, you need:
 
--  A robot equipped with:
-    -    LIDAR for detecting obstacles and measuring distances.
-    -    Odometry to track the robot's movement.
--  An environment for the robot to explore and map.
+- A robot equipped with:
+  - **LIDAR** — for detecting obstacles and measuring distances.
+  - **Odometry** — to track the robot's movement.
+- An environment for the robot to explore and map.
 
-```
+## SLAM
+
+SLAM (Simultaneous Localization and Mapping) is a technique that allows a robot to create a map of an unknown environment 
+while simultaneously determining its own location within it. SLAM algorithms enable robots to explore and navigate without 
+prior knowledge of their surroundings.
+
+SLAM solutions in ROS 2 include:
+
+-    Cartographer
+    -    Real-time Simultaneous Localization and Mapping (SLAM) system that works in both 2D and 3D across various
+         platforms and sensor setups
+-    SLAM-Toolbox
+
