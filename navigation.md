@@ -60,3 +60,9 @@ SLAM solutions in ROS 2 include:
          platforms and sensor setups
 -    SLAM-Toolbox
 
+## Saving Map
+
+cd ~/ros2_ws/src/cartographer_slam/config (directory where .lua file is present)
+ros2 run nav2_map_server map_saver_cli -f turtlebot_area
+
+
