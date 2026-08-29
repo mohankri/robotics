@@ -55,10 +55,22 @@ prior knowledge of their surroundings.
 
 SLAM solutions in ROS 2 include:
 
--    Cartographer
+-    Cartographer (use cartography_ros package)
     -    Real-time Simultaneous Localization and Mapping (SLAM) system that works in both 2D and 3D across various
          platforms and sensor setups
 -    SLAM-Toolbox
+
+Launch cartographer and occupancy grid node from cartography_ros package.
+Launch rviz2 to see and create the map
+    (Include map in Display also ensure /map topic is available)
+Save the map for later use. It will create pgm image file.
+
+ros2 run nav2_map_server map_saver_cli -f turtlebot_area
+
+Once mapping is done, there is no need to use cartographer anymore.
+
+Now to view the map created you can launch map_server node from nav2_map_server package and lifecycle_manager from nav2_lifecycle_manager package (point to yaml file you saved as map)
+
 
 ## Saving Map
 
@@ -78,6 +90,11 @@ y is the y position of the robot in the map frame
 θ is the orientation of the robot in the map frame
 
 <img width="244" height="207" alt="image" src="https://github.com/user-attachments/assets/a013537c-ed58-4cbd-88e9-cf2087edd707" />
+
+# Nav2 LifeCycle Manager
+
+<img width="973" height="440" alt="image" src="https://github.com/user-attachments/assets/3a5b235c-517f-4ecc-821c-b87d37622e36" />
+
 
   
 
