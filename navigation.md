@@ -95,6 +95,19 @@ y is the y position of the robot in the map frame
 
 <img width="973" height="440" alt="image" src="https://github.com/user-attachments/assets/3a5b235c-517f-4ecc-821c-b87d37622e36" />
 
+Node(
+    package='nav2_lifecycle_manager',
+    executable='lifecycle_manager',
+    name='lifecycle_manager',
+    output='screen',
+    parameters=[{'autostart': True},
+                {'node_names': ['map_server',
+                                'amcl',
+                                'controller_server',
+                                'planner_server',
+                                'recoveries_server',
+                                'bt_navigator']}])
+
 
   
 
