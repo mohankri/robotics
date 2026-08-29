@@ -83,6 +83,8 @@ ROS2 using AMCL (Adaptive Monte Carlo Localization).
 
 Robot is localized if somebody publishes the transform between /odom and /map frame because robot /base_link is connected to /odom frame. If all are connected & correct AMCL will publish the transform.
 
+Pose Estimate is set, the whole AMCL system will start localizing the robot. This means that it will start publishing the transform between map and odom. The whole system becomes live!
+
 robot is localized when you know its (x, y,  θ) in the corresponding map (for 2D localization):
 
 x is the x position of the robot in the map frame
@@ -90,6 +92,11 @@ y is the y position of the robot in the map frame
 θ is the orientation of the robot in the map frame
 
 <img width="244" height="207" alt="image" src="https://github.com/user-attachments/assets/a013537c-ed58-4cbd-88e9-cf2087edd707" />
+
+The Adaptive Monte Carlo approach uses particles to localize the robot. These particles have their own coordinates and orientation values, like the actual robot, and a given weight. The weight value ( 
+w
+t
+ ) is defined as the absolute difference between the actual pose of the robot and the predicted pose by that specific particle. The bigger or larger the particle's weight, the more accurately it defines the robot's pose.
 
 # Nav2 LifeCycle Manager
 
