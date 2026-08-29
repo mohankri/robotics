@@ -94,7 +94,7 @@ y is the y position of the robot in the map frame
 # Nav2 LifeCycle Manager
 
 <img width="973" height="440" alt="image" src="https://github.com/user-attachments/assets/3a5b235c-517f-4ecc-821c-b87d37622e36" />
-
+```
 Node(
     package='nav2_lifecycle_manager',
     executable='lifecycle_manager',
@@ -108,6 +108,6 @@ Node(
                                 'recoveries_server',
                                 'bt_navigator']}])
 
-
+```
   
 
