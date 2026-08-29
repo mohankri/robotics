@@ -71,3 +71,13 @@ ROS2 using AMCL (Adaptive Monte Carlo Localization).
 
 Robot is localized if somebody publishes the transform between /odom and /map frame because robot /base_link is connected to /odom frame. If all are connected & correct AMCL will publish the transform.
 
+robot is localized when you know its (x, y,  θ) in the corresponding map (for 2D localization):
+
+x is the x position of the robot in the map frame
+y is the y position of the robot in the map frame
+θ is the orientation of the robot in the map frame
+
+<img width="244" height="207" alt="image" src="https://github.com/user-attachments/assets/a013537c-ed58-4cbd-88e9-cf2087edd707" />
+
+  
+
