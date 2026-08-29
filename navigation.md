@@ -65,4 +65,9 @@ SLAM solutions in ROS 2 include:
 cd ~/ros2_ws/src/cartographer_slam/config (directory where .lua file is present)
 ros2 run nav2_map_server map_saver_cli -f turtlebot_area
 
+# Localization
+
+ROS2 using AMCL (Adaptive Monte Carlo Localization).
+
+Robot is localized if somebody publishes the transform between /odom and /map frame because robot /base_link is connected to /odom frame. If all are connected & correct AMCL will publish the transform.
 
