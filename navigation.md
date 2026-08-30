@@ -131,3 +131,28 @@ behavior_server – Manages recovery actions in case of navigation failures.
 bt_navigator – Executes high-level navigation logic using behavior trees.
 nav2_lifecycle_manager – Manages the lifecycle of navigation nodes.
 
+
+# Costmap
+A Costmap is a 2D representation of robot-sensed obstacles on a grid map.
+
+Each grid cell contains information about the obstacles detected by the sensors
+The cost of the cell can be unknown, free, occupied, or inflated
+Different colors indicate how likely is to collide against and obstacle
+This information is then used by the controllers, planners, and recoveries to compute their tasks safely and efficiently
+
+<img width="1229" height="572" alt="image" src="https://github.com/user-attachments/assets/5df1d69c-71a6-49a2-ac74-ecef3d718ded" />
+
+There are two types of Costmaps:
+
+A Global Costmap (left picture) is generated from the obstacles in the static map. It is the map used by the planner to generate the long-term path.
+A Local Costmap (right picture) is created from new obstacles detected by the robot over a small area around the robot. The controller uses it to generate the short-term path and avoid dynamic obstacles.
+
+<img width="523" height="543" alt="image" src="https://github.com/user-attachments/assets/3f33b6a5-b6fc-4960-a877-893171362ed9" />
+
+
+Differences between Global and Local costmaps
+The Global Costmap helps to avoid the known obstacles on the map, while the Local Costmap is used to avoid dynamic obstacles, which are not on the map.
+
+The Global Costmap covers the entire map, while the Local Costmap covers a small area around the robot.
+
+The Global Costmap is static over the map, while the Local Costmap rolls over the Global Costmap as the robot moves around the space.
