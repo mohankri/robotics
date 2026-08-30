@@ -117,4 +117,17 @@ Node(
                                 'bt_navigator']}])
 ```
   
+# Path Planner Using Nav2 Stack
+
+The role of the Nav2 planner, Nav2 controller, and Nav2 bt-navigator in path planning.
+How to handle navigation behaviors, including recovery behaviors for when things go wrong.
+
+LAUNCHING PATH PLANNING
+To enable path planning, launch the following nodes:
+
+planner_server – Computes the optimal path.
+controller_server – Generates movement commands to follow the planned path.
+behavior_server – Manages recovery actions in case of navigation failures.
+bt_navigator – Executes high-level navigation logic using behavior trees.
+nav2_lifecycle_manager – Manages the lifecycle of navigation nodes.
 
