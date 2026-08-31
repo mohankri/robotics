@@ -156,3 +156,7 @@ The Global Costmap helps to avoid the known obstacles on the map, while the Loca
 The Global Costmap covers the entire map, while the Local Costmap covers a small area around the robot.
 
 The Global Costmap is static over the map, while the Local Costmap rolls over the Global Costmap as the robot moves around the space.
+
+To add a global costmap to the planner configuration file.
+
+
