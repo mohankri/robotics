@@ -182,3 +182,140 @@ int main(int argc, char **argv) {
 // End of Code
 ```
 
+```
+define a couple of static variables for the logger system and for the planning group of our arm, which is named ur_manipulator:
+
+// program variables
+static const rclcpp::Logger LOGGER = rclcpp::get_logger("move_group_node");
+static const std::string PLANNING_GROUP_ROBOT = "ur_manipulator";
+```
+
+```
+ROS2 node as a shared pointer from a ROS2 base node and adding this node to a SingleThreadedExecutor executor. Then, we spin this executor until somebody terminates the program.
+
+// declare move_group node
+rclcpp::Node::SharedPtr move_group_node_;
+
+// declare single threaded executor for move_group node
+rclcpp::executors::SingleThreadedExecutor executor_;
+
+...
+
+// initialize move_group node
+move_group_node_ = rclcpp::Node::make_shared("move_group_node", node_options);
+
+// start move_group node in a new executor thread and spin it
+executor_.add_node(move_group_node_);
+std::thread([this]() { this->executor_.spin(); }).detach();
+```
+```
+create the MoveGroupInterface:
+
+// declare move_group_interface variables for robot
+std::shared_ptr<MoveGroupInterface> move_group_robot_;
+
+...
+
+// initialize move_group interfaces
+move_group_robot_ = std::make_shared<MoveGroupInterface>(move_group_node_, PLANNING_GROUP_ROBOT);
+
+```
+
+```
+As you can see, we initialize a MoveGroupInterface named move_group_robot_ for the arm planning group. It can be easily setup using just the name of the planning group you would like to control and plan for. This interface will allow you to call the move group node capabilities from a C++ program.
+
+Next we create a JointModelGroup pointer and then we get the current state of the robot arm:
+
+// declare joint_model_group for robot
+const JointModelGroup *joint_model_group_robot_;
+
+...
+
+// get initial state of robot
+joint_model_group_robot_ = move_group_robot_->getCurrentState()->getJointModelGroup(PLANNING_GROUP_ROBOT);
+
+JointModelGroup pointer will contain all the information related to the planning group.
+and to get basic information about the robot
+The name of the frame in which the robot is planning
+
+The current end-effector link
+
+The available Planning Groups
+
+// print out basic system information
+
+RCLCPP_INFO(LOGGER, "Planning Frame: %s", move_group_robot_->getPlanningFrame().c_str());
+
+RCLCPP_INFO(LOGGER, "End Effector Link: %s", move_group_robot_->getEndEffectorLink().c_str());
+
+RCLCPP_INFO(LOGGER, "Available Planning Groups:");
+std::vector<std::string> group_names = move_group_robot_->getJointModelGroupNames();
+// more efficient method than std::copy() method used in the docs
+for (long unsigned int i = 0; i < group_names.size(); i++) {
+  RCLCPP_INFO(LOGGER, "Group %ld: %s", i, group_names[i].c_str());
+}
+```
+
+```
+To get current state of robot
+/ declare trajectory planning variables for robot
+std::vector<double> joint_group_positions_robot_;
+RobotStatePtr current_state_robot_;
+
+...
+
+// get current state of robot
+current_state_robot_ = move_group_robot_->getCurrentState(10);
+current_state_robot_->copyJointGroupPositions(joint_model_group_robot_, joint_group_positions_robot_);
+
+```
+
+```
+Plan a motion by changing the position values of the joints, with the help of the functions setup_joint_value_target, plan_trajectory_kinematics and execute_trajectory_plan
+
+- desired position values of the joints. In this case, we are setting the joint values of the home position.
+- we set these new values as the new target using the setJointValueTarget method.
+- call the plan() method of the move group interface to plan the trajectory
+
+// declare trajectory planning variables for robot
+...
+...
+Plan kinematics_trajectory_plan_;
+Pose target_pose_robot_;
+bool plan_success_robot_ = false;
+
+...
+
+void setup_joint_value_target(float angle0, float angle1, float angle2,
+                              float angle3, float angle4, float angle5) {
+  // set the joint values for each joint of robot arm
+  joint_group_positions_robot_[0] = angle0; // Shoulder Pan
+  joint_group_positions_robot_[1] = angle1; // Shoulder Lift
+  joint_group_positions_robot_[2] = angle2; // Elbow
+  joint_group_positions_robot_[3] = angle3; // Wrist 1
+  joint_group_positions_robot_[4] = angle4; // Wrist 2
+  joint_group_positions_robot_[5] = angle5; // Wrist 3
+  move_group_robot_->setJointValueTarget(joint_group_positions_robot_);
+}
+
+void plan_trajectory_kinematics() {
+  // plan the trajectory to target using kinematics
+  plan_success_robot_ = (move_group_robot_->plan(kinematics_trajectory_plan_) ==
+                        moveit::core::MoveItErrorCode::SUCCESS);
+}
+
+...
+
+void execute_trajectory_plan() {
+  RCLCPP_INFO(LOGGER, "Planning Joint Space Trajectory...");
+
+  // setup the joint value target
+  RCLCPP_INFO(LOGGER, "Preparing Joint Value Trajectory...");
+  setup_joint_value_target(+0.0000, -2.3562, +1.5708, -1.5708, -1.5708, +0.0000);
+  // plan and execute the trajectory
+  RCLCPP_INFO(LOGGER, "Planning Joint Value Trajectory...");
+  plan_trajectory_kinematics();
+
+  RCLCPP_INFO(LOGGER, "Joint Space Trajectory Planning Complete");
+}
+```
