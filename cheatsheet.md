@@ -12,6 +12,9 @@ ros2 topic pub -1 /initialpose geometry_msgs/msg/PoseWithCovarianceStamped "{hea
 ros2 action send_goal /navigate_to_pose nav2_msgs/action/NavigateToPose "pose: {header: {frame_id: map}, pose: {position: {x: 1.52, y: 1.92, z: 0.0}, orientation:{x: 0.0, y: 0.0, z: 0, w: 1.0000000}}}"
 ```
 ```
+/* draw object on gazebo */
+ros2 run gazebo_ros spawn_entity.py -file ~/ros2_ws/src/grasp_box.urdf -x 0.34 -y 0.13 -z 0.1 -entity grasp_box
+
 <robot name="grasp_box">
 
     <!-- Colours for RViz for geometric elements -->
@@ -67,8 +70,5 @@ ros2 action send_goal /navigate_to_pose nav2_msgs/action/NavigateToPose "pose: {
     </gazebo>
 
 </robot>
-
-/* draw object on gazebo */
-ros2 run gazebo_ros spawn_entity.py -file ~/ros2_ws/src/grasp_box.urdf -x 0.34 -y 0.13 -z 0.1 -entity grasp_box
 
 ```
